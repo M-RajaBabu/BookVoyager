@@ -912,11 +912,11 @@ if book_title:
         st.session_state.error_message = None
         
         try:
-    with st.spinner("📖 Exploring the literary universe for perfect recommendations..."):
-        response = langchain_helper.generate_book_recommendations(
+            with st.spinner("📖 Exploring the literary universe for perfect recommendations..."):
+                response = langchain_helper.generate_book_recommendations(
                     validation_result,  # Use validated title
-            num_books=num_books,
-            genres=genres,
+                    num_books=num_books,
+                    genres=genres,
                     era=era,
                     reading_level=reading_level,
                     book_length=book_length
@@ -930,9 +930,9 @@ if book_title:
                 if not response or 'book_recommendations' not in response or 'reading_journey' not in response:
                     raise Exception("Invalid response from AI service")
                 
-        # Store in session state
-        st.session_state.recommendations = response['book_recommendations']
-        st.session_state.reading_journey = response['reading_journey']
+                # Store in session state
+                st.session_state.recommendations = response['book_recommendations']
+                st.session_state.reading_journey = response['reading_journey']
         
             # Display recommendations with enhanced features
             st.subheader(f"✨ Books Similar to '{validation_result}'")
@@ -1026,16 +1026,16 @@ if book_title:
             
             # Also show the original markdown for compatibility
             st.markdown("### 📝 Detailed Recommendations")
-        st.markdown(st.session_state.recommendations, unsafe_allow_html=True)
+            st.markdown(st.session_state.recommendations, unsafe_allow_html=True)
         
-        # Reading journey
-        st.subheader("🌟 Your Personalized Reading Journey")
-        st.markdown(st.session_state.reading_journey, unsafe_allow_html=True)
-        
+            # Reading journey
+            st.subheader("🌟 Your Personalized Reading Journey")
+            st.markdown(st.session_state.reading_journey, unsafe_allow_html=True)
+            
             # Analytics Dashboard Section
             st.markdown("---")
             st.subheader("📊 Reading Analytics Dashboard")
-                
+            
             analytics = st.session_state.analytics_helper.get_reading_analytics()
             
             # Analytics overview
@@ -1128,24 +1128,24 @@ if book_title:
                     else:
                         st.error("Failed to clear list")
             
-        # Success message
-        st.success("🎉 Happy reading! May your literary journey be unforgettable!")
-        
-        # WhatsApp sharing button
-        st.markdown("---")
-        st.subheader("📤 Share Your Recommendations")
-        st.markdown("""
-        <div class="share-container">
-            <p>Share these book recommendations with friends on WhatsApp!</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        if st.button("💬 Share via WhatsApp", key="whatsapp_share", use_container_width=True, type="primary"):
-            st.balloons()
+            # Success message
+            st.success("🎉 Happy reading! May your literary journey be unforgettable!")
             
+            # WhatsApp sharing button
+            st.markdown("---")
+            st.subheader("📤 Share Your Recommendations")
+            st.markdown("""
+            <div class="share-container">
+                <p>Share these book recommendations with friends on WhatsApp!</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("💬 Share via WhatsApp", key="whatsapp_share", use_container_width=True, type="primary"):
+                st.balloons()
+                
                 try:
                     # Create WhatsApp message with better parsing
-            whatsapp_message = f"📚 *Book Recommendations from BookVoyager!*\n\n"
+                    whatsapp_message = f"📚 *Book Recommendations from BookVoyager!*\n\n"
                     whatsapp_message += f"I discovered these amazing books similar to *{validation_result}*:\n\n"
                     
                     # Extract book information using the new function
@@ -1157,11 +1157,11 @@ if book_title:
                             if 'year' in book:
                                 whatsapp_message += f" ({book['year']})"
                             whatsapp_message += "\n"
-            
-            whatsapp_message += "\n🌟 *My Personalized Reading Journey:*\n"
-            
+                    
+                    whatsapp_message += "\n🌟 *My Personalized Reading Journey:*\n"
+                    
                     # Add reading journey highlights with better parsing
-            if st.session_state.reading_journey:
+                    if st.session_state.reading_journey:
                         # Extract journey steps using regex
                         journey_pattern = r'\*\*(Start with|Continue with|Explore|Dive into|Finish with)\*\*: ([^-\n]+)'
                         journey_matches = re.findall(journey_pattern, st.session_state.reading_journey)
@@ -1169,33 +1169,33 @@ if book_title:
                         for step_type, description in journey_matches:
                             clean_description = description.strip()
                             whatsapp_message += f"→ **{step_type}**: {clean_description}\n"
-            
-            whatsapp_message += "\nDiscover your next read at BookVoyager!"
-            
-            # Encode for WhatsApp URL
-            encoded_message = urllib.parse.quote(whatsapp_message)
-            whatsapp_url = f"https://wa.me/?text={encoded_message}"
-            
-            # Show success and link
-            st.success("✅ WhatsApp message created! Click the button below to share:")
-            st.markdown(f'''
-                <a href="{whatsapp_url}" target="_blank" style="
-                    display: inline-block;
-                    background-color: #25D366;
-                    color: #fff !important;
-                    font-weight: bold;
-                    font-size: 1.2rem;
-                    padding: 14px 28px;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    margin-top: 12px;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-                    transition: background 0.2s;
-                " onmouseover="this.style.backgroundColor='#128C7E'" onmouseout="this.style.backgroundColor='#25D366'">
-                    💬 Open WhatsApp to Share
-                </a>
-            ''', unsafe_allow_html=True)
-                
+                    
+                    whatsapp_message += "\nDiscover your next read at BookVoyager!"
+                    
+                    # Encode for WhatsApp URL
+                    encoded_message = urllib.parse.quote(whatsapp_message)
+                    whatsapp_url = f"https://wa.me/?text={encoded_message}"
+                    
+                    # Show success and link
+                    st.success("✅ WhatsApp message created! Click the button below to share:")
+                    st.markdown(f'''
+                        <a href="{whatsapp_url}" target="_blank" style="
+                            display: inline-block;
+                            background-color: #25D366;
+                            color: #fff !important;
+                            font-weight: bold;
+                            font-size: 1.2rem;
+                            padding: 14px 28px;
+                            border-radius: 8px;
+                            text-decoration: none;
+                            margin-top: 12px;
+                            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                            transition: background 0.2s;
+                        " onmouseover="this.style.backgroundColor='#128C7E'" onmouseout="this.style.backgroundColor='#25D366'">
+                            💬 Open WhatsApp to Share
+                        </a>
+                    ''', unsafe_allow_html=True)
+                    
                 except Exception as e:
                     st.error(f"Error creating WhatsApp message: {str(e)}")
         
