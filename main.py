@@ -59,6 +59,132 @@ def local_css(theme='dark'):
         overlay = 'rgba(240,248,255,0.9)'
     st.markdown(f"""
     <style>
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {{
+        .stApp {{
+            padding: 10px !important;
+        }}
+        [data-testid="stSidebar"] {{
+            width: 100% !important;
+            position: relative !important;
+            height: auto !important;
+            margin-bottom: 20px !important;
+        }}
+        .main-header {{
+            font-size: 24px !important;
+            text-align: center !important;
+        }}
+        .book-card {{
+            flex-direction: column !important;
+            padding: 15px !important;
+        }}
+        .book-cover {{
+            width: 100% !important;
+            max-width: 200px !important;
+            margin: 0 auto 15px auto !important;
+        }}
+        .book-info {{
+            width: 100% !important;
+            padding: 0 !important;
+        }}
+        .button-group {{
+            flex-direction: column !important;
+            gap: 10px !important;
+        }}
+        .button-group button {{
+            width: 100% !important;
+            margin: 5px 0 !important;
+        }}
+        .analytics-grid {{
+            grid-template-columns: 1fr !important;
+            gap: 15px !important;
+        }}
+        .hero-section {{
+            flex-direction: column !important;
+            text-align: center !important;
+        }}
+        .testimonial-grid {{
+            grid-template-columns: 1fr !important;
+        }}
+        .feature-grid {{
+            grid-template-columns: 1fr !important;
+        }}
+        .share-container {{
+            padding: 15px !important;
+        }}
+        .stButton > button {{
+            width: 100% !important;
+            margin: 5px 0 !important;
+        }}
+        .stTextInput > div > div > input {{
+            font-size: 16px !important;
+        }}
+        .stSelectbox > div > div > select {{
+            font-size: 16px !important;
+        }}
+        .stSlider > div > div > div > div {{
+            font-size: 16px !important;
+        }}
+        
+        /* Touch-friendly buttons */
+        .stButton > button {{
+            min-height: 44px !important;
+            padding: 12px 20px !important;
+        }}
+        
+        /* Better spacing for mobile */
+        .stMarkdown {{
+            margin-bottom: 15px !important;
+        }}
+        
+        /* Responsive images */
+        img {{
+            max-width: 100% !important;
+            height: auto !important;
+        }}
+        
+        /* Better text readability on mobile */
+        p, h1, h2, h3, h4, h5, h6 {{
+            line-height: 1.6 !important;
+        }}
+        
+        /* Mobile-friendly sidebar */
+        [data-testid="stSidebar"] {{
+            padding: 15px !important;
+        }}
+        
+        /* Responsive containers */
+        .stContainer {{
+            padding: 10px !important;
+        }}
+    }}
+    
+    /* Tablet Responsive Design */
+    @media (min-width: 769px) and (max-width: 1024px) {{
+        .book-card {{
+            flex-direction: column !important;
+        }}
+        .analytics-grid {{
+            grid-template-columns: repeat(2, 1fr) !important;
+        }}
+        .feature-grid {{
+            grid-template-columns: repeat(2, 1fr) !important;
+        }}
+    }}
+    
+    /* Desktop and larger screens */
+    @media (min-width: 1025px) {{
+        .book-card {{
+            flex-direction: row !important;
+        }}
+        .analytics-grid {{
+            grid-template-columns: repeat(4, 1fr) !important;
+        }}
+        .feature-grid {{
+            grid-template-columns: repeat(3, 1fr) !important;
+        }}
+    }}
+    
     .stApp {{
         background-color: rgba(255, 255, 255, 0.95);
         background-image: linear-gradient({overlay}, {overlay}), url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
@@ -686,7 +812,7 @@ def local_css(theme='dark'):
 local_css(st.session_state['theme'])
 
 # Main content
-st.title("📚 BookVoyager")
+st.markdown('<h1 class="main-header">📚 BookVoyager</h1>', unsafe_allow_html=True)
 st.subheader("Discover Your Next Literary Adventure")
 
 # Function to validate input
@@ -949,9 +1075,13 @@ if book_title:
                     # Track book in reading history
                     st.session_state.analytics_helper.add_to_reading_history(book, validation_result)
                     with st.container():
+                        st.markdown('<div class="book-card">', unsafe_allow_html=True)
+                        
+                        # Mobile responsive columns
                         col1, col2 = st.columns([1, 3])
                         
                         with col1:
+                            st.markdown('<div class="book-cover">', unsafe_allow_html=True)
                             # Book cover
                             if st.session_state.show_book_covers:
                                 cover_url = st.session_state.enhanced_features.get_book_cover(
@@ -969,8 +1099,10 @@ if book_title:
                                         <span style="color: #666; font-size: 12px;">No Cover</span>
                                     </div>
                                     """, unsafe_allow_html=True)
+                            st.markdown('</div>', unsafe_allow_html=True)
                         
                         with col2:
+                            st.markdown('<div class="book-info">', unsafe_allow_html=True)
                             # Book information
                             book_title = book.get('title', 'Unknown Title')
                             book_author = book.get('author', 'Unknown Author')
@@ -995,6 +1127,7 @@ if book_title:
                                 st.markdown(f"**Why Recommended:** {book.get('reason')}")
                             
                             # Reading list buttons
+                            st.markdown('<div class="button-group">', unsafe_allow_html=True)
                             col_btn1, col_btn2, col_btn3 = st.columns(3)
                             with col_btn1:
                                 if st.button("📖 To Read", key=f"to_read_{i}"):
@@ -1016,7 +1149,9 @@ if book_title:
                                         st.success("Added to Completed list!")
                                     else:
                                         st.info("Already in Completed list")
+                            st.markdown('</div>', unsafe_allow_html=True)
                         
+                        st.markdown('</div>', unsafe_allow_html=True)
                         st.markdown("---")
             else:
                 # Fallback if no books were extracted
@@ -1039,6 +1174,7 @@ if book_title:
             analytics = st.session_state.analytics_helper.get_reading_analytics()
             
             # Analytics overview
+            st.markdown('<div class="analytics-grid">', unsafe_allow_html=True)
             col1, col2, col3, col4 = st.columns(4)
             with col1:
                 st.metric("📖 Books Viewed", analytics['total_books_viewed'])
@@ -1052,6 +1188,7 @@ if book_title:
                     st.metric("🎯 Top Genre", f"{top_genre[0]} ({top_genre[1]})")
                 else:
                     st.metric("🎯 Top Genre", "None yet")
+            st.markdown('</div>', unsafe_allow_html=True)
             
             # Most viewed books
             if analytics['most_viewed_books']:
@@ -1261,6 +1398,7 @@ if st.session_state.error_message:
 
 else:
     # Hero section
+    st.markdown('<div class="hero-section">', unsafe_allow_html=True)
     col1, col2 = st.columns([1, 2])
     with col1:
         # Using an online book icon
@@ -1273,10 +1411,12 @@ else:
             <p>Just tell us a book you love, and we'll create a personalized reading journey!</p>
         </div>
         """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Features section
     st.markdown("---")
     st.subheader("🚀 Why BookVoyager?")
+    st.markdown('<div class="feature-grid">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     
     with col1:
@@ -1290,10 +1430,12 @@ else:
     with col3:
         st.markdown("### 🎯 Personalized Filters")
         st.markdown("Filter by genre, era, or mood to get recommendations that match your current reading preferences.")
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Testimonials
     st.markdown("---")
     st.subheader("📣 What Readers Say")
+    st.markdown('<div class="testimonial-grid">', unsafe_allow_html=True)
     testimonial1, testimonial2 = st.columns(2)
     
     with testimonial1:
@@ -1313,3 +1455,4 @@ else:
             <div class="author">- David R., Public Librarian</div>
         </div>
         """, unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
