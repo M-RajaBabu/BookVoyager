@@ -148,19 +148,65 @@ GROQ_API_KEY=your_groq_api_key_here
 
 ## 📦 Deployment
 
-### Streamlit Cloud (Recommended)
-1. **Fork/Clone** this repository to your GitHub account
-2. **Go to** [share.streamlit.io](https://share.streamlit.io)
-3. **Sign in** with your GitHub account
-4. **Connect** your repository
-5. **Set environment variables**:
-   - `GROQ_API_KEY`: Your Groq API key
-6. **Deploy!**
+### Streamlit Cloud (Recommended - Free)
 
-### Alternative Platforms
-- **Railway**: Good free tier, easy deployment
-- **Render**: Reliable hosting, good documentation
-- **Heroku**: Established platform (paid)
+**Current Status**: ✅ Already deployed at [https://bookvoyager.streamlit.app](https://bookvoyager.streamlit.app)
+
+**To deploy your own version:**
+
+1. **Fork/Clone** this repository to your GitHub account
+2. **Get a Groq API Key**:
+   - Visit [groq.com](https://groq.com)
+   - Sign up for a free account
+   - Get your API key from the dashboard
+3. **Go to** [share.streamlit.io](https://share.streamlit.io)
+4. **Sign in** with your GitHub account
+5. **Connect** your repository
+6. **Set environment variables**:
+   - Click "Advanced settings"
+   - Add: `GROQ_API_KEY` = `your_groq_api_key_here`
+7. **Deploy!** - Click "Deploy app"
+
+**Deployment Time**: ~2-3 minutes
+
+### Option 2: Railway (Alternative - Free Tier)
+
+1. **Sign up** at [railway.app](https://railway.app)
+2. **Connect** your GitHub repository
+3. **Add environment variable**:
+   - `GROQ_API_KEY`: Your Groq API key
+4. **Deploy** - Railway will auto-detect it's a Python app
+
+### Option 3: Render (Alternative - Free Tier)
+
+1. **Sign up** at [render.com](https://render.com)
+2. **Create new Web Service**
+3. **Connect** your GitHub repository
+4. **Configure**:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `streamlit run main.py --server.port $PORT`
+5. **Add environment variable**:
+   - `GROQ_API_KEY`: Your Groq API key
+6. **Deploy**
+
+### Option 4: Heroku (Paid)
+
+1. **Install Heroku CLI**
+2. **Create** `Procfile`:
+   ```
+   web: streamlit run main.py --server.port=$PORT --server.address=0.0.0.0
+   ```
+3. **Deploy**:
+   ```bash
+   heroku create your-app-name
+   heroku config:set GROQ_API_KEY=your_api_key
+   git push heroku main
+   ```
+
+### Environment Variables Required
+
+All deployment platforms need this environment variable:
+- `GROQ_API_KEY`: Your Groq API key from [groq.com](https://groq.com)
 
 ## 🤝 Contributing
 

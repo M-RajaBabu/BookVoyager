@@ -1,0 +1,40 @@
+{
+  "app_name": "BookVoyager",
+  "main_file": "main.py",
+  "requirements": "requirements.txt",
+  "environment_variables": {
+    "GROQ_API_KEY": "Your Groq API key from groq.com"
+  },
+  "deployment_platforms": {
+    "streamlit_cloud": {
+      "url": "https://share.streamlit.io",
+      "steps": [
+        "Sign in with GitHub",
+        "Click 'New app'",
+        "Select your repository",
+        "Set main file path to 'main.py'",
+        "Add GROQ_API_KEY environment variable",
+        "Click 'Deploy app'"
+      ]
+    },
+    "railway": {
+      "url": "https://railway.app",
+      "steps": [
+        "Sign up and connect GitHub",
+        "Add GROQ_API_KEY environment variable",
+        "Deploy (auto-detects Python app)"
+      ]
+    },
+    "render": {
+      "url": "https://render.com",
+      "steps": [
+        "Create new Web Service",
+        "Connect GitHub repository",
+        "Set build command: pip install -r requirements.txt",
+        "Set start command: streamlit run main.py --server.port $PORT --server.address 0.0.0.0",
+        "Add GROQ_API_KEY environment variable",
+        "Deploy"
+      ]
+    }
+  }
+}
